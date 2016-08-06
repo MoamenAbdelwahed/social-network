@@ -73,6 +73,11 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'PostController@postEditPost',
         'as' => 'edit'
         ]);
+    Route::post('/comment',[
+        'uses' => 'CommentController@postCreateComment',
+        'as' => 'comment',
+        'middleware' => 'auth'
+        ]);
     Route::post('/like',[
         'uses' => 'PostController@postLikePost',
         'as' => 'like'

@@ -1,0 +1,5 @@
+spec_path: tests
+suites:
+  acme_suite:
+      src_path: Acme/src
+      spec_path: Acme/spec

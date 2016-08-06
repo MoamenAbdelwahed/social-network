@@ -1,6 +1,7 @@
 var postId = 0;
 var postBodyElement = null;
 
+// post part
 $('.post').find('.interaction').find('.edit').on('click', function(){
 	event.preventDefault();
 
@@ -33,7 +34,7 @@ $('#modal-save').on('click',function(){
 $('.like').on('click', function(event){
 	event.preventDefault();
 	var isLike = event.target.previousElementSibling == null;
-	var	postId = event.target.parentNode.parentNode.dataset['postid'];
+	var	postId = event.target.parentNode.parentNode.parentNode.parentNode.dataset['postid'];
 	$.ajax({
 		method: 'POST',
 		url: urlLike,
@@ -48,4 +49,31 @@ $('.like').on('click', function(event){
 		}
 	});
 	
+});
+
+// comment part
+$('.post').find('.interaction').find('.comment').on('click', function(){
+	event.preventDefault();
+
+	postId = event.target.parentNode.parentNode.parentNode.parentNode.dataset['postid'];
+	console.log(postId);
+	$('#comment-modal').modal('show');
+});
+
+$('#comment-save').on('click',function(){
+	$.ajax({
+		method: 'POST',
+		url: urlComment,
+		data: {body: $('#comment-body').val(), postId: postId, userId: currentUser, _token: token},
+		
+
+		error: function (xhr, ajaxOptions, thrownError) {
+	           console.log(xhr.status);
+	           console.log(xhr.responseText);
+	           console.log(thrownError);
+	       }
+	})
+	.done(function(msg){
+		$('#comment-modal').modal('hide');
+	});
 });
